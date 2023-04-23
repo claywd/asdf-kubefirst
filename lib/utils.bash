@@ -3,9 +3,9 @@
 set -euo pipefail
 
 # TODO: Ensure this is the correct GitHub homepage where releases can be downloaded for <YOUR TOOL>.
-GH_REPO="<TOOL REPO>"
-TOOL_NAME="<YOUR TOOL>"
-TOOL_TEST="<TOOL CHECK>"
+GH_REPO="https://github.com/kubefirst/kubefirst"
+TOOL_NAME="kubefirst"
+TOOL_TEST="kubefirst"
 
 fail() {
 	echo -e "asdf-$TOOL_NAME: $*"
@@ -36,13 +36,44 @@ list_all_versions() {
 	list_github_tags
 }
 
+get_arch() {
+	uname | tr '[:upper:]' '[:lower:]'
+}
+
+get_cpu() {
+	local machine_hardware_name
+	machine_hardware_name=${ASDF_KUBEFIRST_OVERWRITE_ARCH:-"$(uname -m)"}
+
+	case "$machine_hardware_name" in
+	'x86_64') local cpu_type="amd64" ;;
+	'powerpc64le' | 'ppc64le') local cpu_type="ppc64le" ;;
+	'aarch64') local cpu_type="arm64" ;;
+	'armv7l') local cpu_type="arm" ;;
+	*) local cpu_type="$machine_hardware_name" ;;
+	esac
+
+	echo "$cpu_type"
+}
+
+get_download_url() {
+	local version="$1"
+	local platform
+	platform="$(get_arch)"
+	local cpu
+	cpu=$(get_cpu)
+	echo "${GH_REPO}/releases/download/v${version}/kubefirst_${version}_${platform}_${cpu}.tar.gz"
+}
+
 download_release() {
 	local version filename url
 	version="$1"
 	filename="$2"
 
+	local download_url
+	download_url="$(get_download_url "$version")"
+
 	# TODO: Adapt the release URL convention for <YOUR TOOL>
-	url="$GH_REPO/archive/v${version}.tar.gz"
+	url=${download_url}
 
 	echo "* Downloading $TOOL_NAME release $version..."
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
