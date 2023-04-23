@@ -4,7 +4,7 @@ set -euo pipefail
 
 GH_REPO="https://github.com/kubefirst/kubefirst"
 TOOL_NAME="kubefirst"
-TOOL_TEST="kubefirst"
+TOOL_TEST="kubefirst help"
 
 fail() {
 	echo -e "asdf-$TOOL_NAME: $*"
