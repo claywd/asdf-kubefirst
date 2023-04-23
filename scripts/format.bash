@@ -4,7 +4,3 @@
 shfmt --language-dialect bash --write \
 	setup.bash \
 	scripts/*.bash
-
-# format the template/
-shfmt --language-dialect bash --write \
-	template/**/*
