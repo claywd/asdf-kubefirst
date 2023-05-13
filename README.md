@@ -1,4 +1,4 @@
-# asdf-kubefirst
+# asdf-kubefirst [![Build Status](https://github.com/claywd/asdf-kubefirst/actions/workflows/build.yml/badge.svg)](https://github.com/ganta/asdf-kubefirst/actions/workflows/build.yml)     
 
 kubefirst plugin for [asdf](https://github.com/asdf-vm/asdf) version manager
 
