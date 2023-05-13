@@ -1,47 +1,25 @@
-name: Build
+name: Test Plugin
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
+  push:
+  schedule:
+    - cron: 0 1 * * MON
 
 jobs:
-  test:
-    name: template setup test
+  test-plugin:
+    name: Test Plugin
+
     strategy:
+      fail-fast: false
       matrix:
         os:
-          - ubuntu-latest
           - macos-latest
-    runs-on: ${{ matrix.os }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Run Template Setup
-        run: |
-          git config user.name "Foo Bearer"
-          ./setup.bash \
-            "asdf-foo" \
-            "foo --help" \
-            "asdf-community" \
-            "ASDF Community" \
-            "https://github.com/asdf-vm/asdf" \
-            "https://asdf-vm.com" \
-            "Apache-2.0" \
-            "yes"
+          - ubuntu-latest
 
-      - name: Check setup result
-        run: |
-          set -xe
-          ls -la .
-          git log
-          test ! -d template/
-          grep "Apache" LICENSE
-          test "main" = "$(git rev-parse --abbrev-ref HEAD)"
-          ! git grep -F -e "<YOUR TOOL>" \
-                   --or -e "<TOOL HOMEPAGE>" \
-                   --or -e "<TOOL REPO>" \
-                   --or -e "<TOOL CHECK>" \
-                   --or -e "<YOUR NAME>" \
-                   --or -e"<YOUR GITHUB USERNAME>"
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: asdf-vm/actions/plugin-test@v2
+        with:
+          command: kubefirst version
