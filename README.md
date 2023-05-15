@@ -10,7 +10,7 @@ asdf plugin-add kubefirst https://github.com/Claywd/asdf-kubefirst.git
 
 ## Use
 
-Check out the [asdf documentation](https://asdf-vm.com/#/core-manage-versions?id=install-version) for instructions on how to install and manage versions of Kubectl.
+Check out the [asdf documentation](https://asdf-vm.com/#/core-manage-versions?id=install-version) for instructions on how to install and manage versions of kubefirst.
 
 ## Architecture Override
 
