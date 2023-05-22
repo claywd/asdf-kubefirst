@@ -6,7 +6,6 @@ kubefirst plugin for [asdf](https://github.com/asdf-vm/asdf) version manager
 
 ```
 asdf plugin-add kubefirst https://github.com/Claywd/asdf-kubefirst.git;
-asdf plugin-add kubefirst https://github.com/Claywd/asdf-kubefirst.git;
 asdf install kubefirst latest;
 asdf global kubefirst;
 kubefirst version;
